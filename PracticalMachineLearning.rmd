@@ -6,10 +6,10 @@ output: html_document
 ---
 
 ##Introduction
-The data for this project come from this [source][http://groupware.les.inf.puc-rio.br/har]. The data set consists of a readings from accelerometers attached to the subjects performing different exercises. The sensors were attached on the belt, forearm, arm, and dumbell. The goal of this project is to predict the manner in which these subjects did the exercises. The dependent variable we want to predict is the **'classe'** variable in the training data set.
+The data for this project come from this source: http://groupware.les.inf.puc-rio.br/har. The data set consists of a readings from accelerometers attached to the subjects performing different exercises. The sensors were attached on the belt, forearm, arm, and dumbell. The goal of this project is to predict the manner in which these subjects did the exercises. The dependent variable we want to predict is the **'classe'** variable in the training data set.
 
-##Getting and Clening Data
-First, Read the training **pml-training.csv** and testing **pml-testing.csv** data files. Then remove all variables with more than 20% of missing values.Finally, remove the first seven variables that represents ID variables and some technical information about the measurements. These variables are irelevant for the prediction. Do this for both training and testing data set.
+##Getting and Cleaning Data
+First, Read the training **pml-training.csv** and testing **pml-testing.csv** data files. Then remove all variables with more than 20% of missing values. Finally, remove the first seven variables that represent ID variables and some technical information about the measurements. These variables are irrelevant for the prediction. Do this for both training and testing data set.
 
 ```{r, cache=TRUE, message=FALSE}
 library(caret)
@@ -31,7 +31,7 @@ training1<-training1[,-c(1:7)]
 test1<-test1[,-c(1:7)]
 ```
 
-Now split the training data set in two parts (70:30) per cent in size. The first part (**training**) will be used for the creation of machine learning algoritm and the second part (**testing**) of the data set for the out-of-sample error estimation. Initialize the pseudorandom number generator for with *set.seed()* function because of the reproducibility of the subsequent computation.
+Now split the training data set in two parts (70:30) per cent in size. The first part (**training**) will be used for the creation of machine learning algorithm and the second part (**testing**) of the data set for the out-of-sample error estimation. Initialize the pseudorandom number generator for with *set.seed()* function because of the reproducibility of the subsequent computation.
 
 ```{r, cache=TRUE}
 #split the training data
@@ -41,7 +41,7 @@ training <- training1[inTrain,]
 testing <- training1[-inTrain,]
 ```
 
-##Modeling
+##Modelling
 I created the prediction model using the random forest algorithm, since it is one of the top performing algorithms in the terms of accuracy. For the sake of computational speed I used direct calling of the *randomForest()* function. (Thank you guys from the [discussion forum][1] for this suggestion.)
 
 [1]: https://class.coursera.org/predmachlearn-007/forum/thread?thread_id=76
@@ -80,4 +80,4 @@ x <- x[titles[titles!='classe']]
 answers<-predict(fit3, newdata=x)
 pml_write_files(answers)
 ```
-These answers were submited to the website for grading and all answers were correct.
+These answers were submitted to the website for grading and all answers were correct.

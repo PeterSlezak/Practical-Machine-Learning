@@ -60,11 +60,11 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>The data for this project come from this [source][<a href="http://groupware.les.inf.puc-rio.br/har">http://groupware.les.inf.puc-rio.br/har</a>]. The data set consists of a readings from accelerometers attached to the subjects performing different exercises. The sensors were attached on the belt, forearm, arm, and dumbell. The goal of this project is to predict the manner in which these subjects did the exercises. The dependent variable we want to predict is the <strong>‘classe’</strong> variable in the training data set.</p>
+<p>The data for this project come from this source: <a href="http://groupware.les.inf.puc-rio.br/har">http://groupware.les.inf.puc-rio.br/har</a>. The data set consists of a readings from accelerometers attached to the subjects performing different exercises. The sensors were attached on the belt, forearm, arm, and dumbell. The goal of this project is to predict the manner in which these subjects did the exercises. The dependent variable we want to predict is the <strong>‘classe’</strong> variable in the training data set.</p>
 </div>
-<div id="getting-and-clening-data" class="section level2">
-<h2>Getting and Clening Data</h2>
-<p>First, Read the training <strong>pml-training.csv</strong> and testing <strong>pml-testing.csv</strong> data files. Then remove all variables with more than 20% of missing values.Finally, remove the first seven variables that represents ID variables and some technical information about the measurements. These variables are irelevant for the prediction. Do this for both training and testing data set.</p>
+<div id="getting-and-cleaning-data" class="section level2">
+<h2>Getting and Cleaning Data</h2>
+<p>First, Read the training <strong>pml-training.csv</strong> and testing <strong>pml-testing.csv</strong> data files. Then remove all variables with more than 20% of missing values. Finally, remove the first seven variables that represent ID variables and some technical information about the measurements. These variables are irrelevant for the prediction. Do this for both training and testing data set.</p>
 <pre class="r"><code>library(caret)
 library(randomForest)
 
@@ -82,15 +82,15 @@ test1&lt;-test1[, colSums(is.na(test1))&lt;nalim2]
 #remove columns - X, user_name, raw_timestamp_part_1, raw_timestamp_part_2, cvtd_timestamp, new_window, num_window
 training1&lt;-training1[,-c(1:7)]
 test1&lt;-test1[,-c(1:7)]</code></pre>
-<p>Now split the training data set in two parts (70:30) per cent in size. The first part (<strong>training</strong>) will be used for the creation of machine learning algoritm and the second part (<strong>testing</strong>) of the data set for the out-of-sample error estimation. Initialize the pseudorandom number generator for with <em>set.seed()</em> function because of the reproducibility of the subsequent computation.</p>
+<p>Now split the training data set in two parts (70:30) per cent in size. The first part (<strong>training</strong>) will be used for the creation of machine learning algorithm and the second part (<strong>testing</strong>) of the data set for the out-of-sample error estimation. Initialize the pseudorandom number generator for with <em>set.seed()</em> function because of the reproducibility of the subsequent computation.</p>
 <pre class="r"><code>#split the training data
 set.seed(10)
 inTrain &lt;- createDataPartition(training1$classe, p=0.7, list=F)
 training &lt;- training1[inTrain,]
 testing &lt;- training1[-inTrain,]</code></pre>
 </div>
-<div id="modeling" class="section level2">
-<h2>Modeling</h2>
+<div id="modelling" class="section level2">
+<h2>Modelling</h2>
 <p>I created the prediction model using the random forest algorithm, since it is one of the top performing algorithms in the terms of accuracy. For the sake of computational speed I used direct calling of the <em>randomForest()</em> function. (Thank you guys from the <a href="https://class.coursera.org/predmachlearn-007/forum/thread?thread_id=76">discussion forum</a> for this suggestion.)</p>
 <pre class="r"><code>#random forest
 #fit2&lt;-train(classe~., data=training, method=&quot;rf&quot;)
@@ -163,7 +163,7 @@ titles&lt;-names(test1)
 x &lt;- x[titles[titles!='classe']]
 answers&lt;-predict(fit3, newdata=x)
 pml_write_files(answers)</code></pre>
-<p>These answers were submited to the website for grading and all answers were correct.</p>
+<p>These answers were submitted to the website for grading and all answers were correct.</p>
 </div>
 
 
